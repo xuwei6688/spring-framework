@@ -317,11 +317,13 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 			logger.trace("Loading XML bean definitions from " + encodedResource);
 		}
 
+		//获取已经加载过的资源
 		Set<EncodedResource> currentResources = this.resourcesCurrentlyBeingLoaded.get();
 		if (currentResources == null) {
 			currentResources = new HashSet<>(4);
 			this.resourcesCurrentlyBeingLoaded.set(currentResources);
 		}
+		//如果当前资源已被加载过抛出异常
 		if (!currentResources.add(encodedResource)) {
 			throw new BeanDefinitionStoreException(
 					"Detected cyclic loading of " + encodedResource + " - check your import definitions!");
@@ -330,9 +332,12 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 			InputStream inputStream = encodedResource.getResource().getInputStream();
 			try {
 				InputSource inputSource = new InputSource(inputStream);
+
 				if (encodedResource.getEncoding() != null) {
+					//如果有特别的编码设置会走这里
 					inputSource.setEncoding(encodedResource.getEncoding());
 				}
+				//实际从XML中加载BeanDefinition
 				return doLoadBeanDefinitions(inputSource, encodedResource.getResource());
 			}
 			finally {
@@ -389,7 +394,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 			throws BeanDefinitionStoreException {
 
 		try {
+			//加载到的标签首先解析成Document
 			Document doc = doLoadDocument(inputSource, resource);
+
+			//由给定的Document注册BeanDefinition
 			int count = registerBeanDefinitions(doc, resource);
 			if (logger.isDebugEnabled()) {
 				logger.debug("Loaded " + count + " bean definitions from " + resource);
@@ -501,7 +509,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * {@code registerBeanDefinitions} on it.
 	 * @param doc the DOM document
 	 * @param resource the resource descriptor (for context information)
-	 * @return the number of bean definitions found
+	 * @return the number of bean definitions found	返回注册的BeanDefinition
 	 * @throws BeanDefinitionStoreException in case of parsing errors
 	 * @see #loadBeanDefinitions
 	 * @see #setDocumentReaderClass
@@ -509,8 +517,14 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 */
 	public int registerBeanDefinitions(Document doc, Resource resource) throws BeanDefinitionStoreException {
 		BeanDefinitionDocumentReader documentReader = createBeanDefinitionDocumentReader();
+
+		//已经注册的BeanDefinition数量
 		int countBefore = getRegistry().getBeanDefinitionCount();
+
+		//把实际注册的工作交给了BeanDefinitionDocumentReader
 		documentReader.registerBeanDefinitions(doc, createReaderContext(resource));
+
+		//返回注册的BeanDefinition
 		return getRegistry().getBeanDefinitionCount() - countBefore;
 	}
 

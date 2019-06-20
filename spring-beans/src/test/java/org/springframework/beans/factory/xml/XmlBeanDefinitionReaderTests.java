@@ -16,9 +16,11 @@
 
 package org.springframework.beans.factory.xml;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import org.junit.Test;
+import org.springframework.util.ClassUtils;
 import org.xml.sax.InputSource;
 
 import org.springframework.beans.factory.BeanDefinitionStoreException;
@@ -66,7 +68,7 @@ public class XmlBeanDefinitionReaderTests {
 	@Test
 	public void withImport() {
 		SimpleBeanDefinitionRegistry registry = new SimpleBeanDefinitionRegistry();
-		Resource resource = new ClassPathResource("import.xml", getClass());
+		Resource resource = new ClassPathResource("import.xml");
 		new XmlBeanDefinitionReader(registry).loadBeanDefinitions(resource);
 		testBeanDefinitions(registry);
 	}
@@ -136,6 +138,17 @@ public class XmlBeanDefinitionReaderTests {
 		new XmlBeanDefinitionReader(factory).loadBeanDefinitions(resource);
 		TestBean bean = (TestBean) factory.getBean("testBean");
 		assertNotNull(bean);
+	}
+
+	@Test
+	public void testLoadBeanDefinition() throws IOException {
+		Resource resource = new ClassPathResource("test.xml", getClass());
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+
+		reader.loadBeanDefinitions(resource);
+
+		System.out.println(beanFactory.getBean("commentsInValue"));
 	}
 
 }

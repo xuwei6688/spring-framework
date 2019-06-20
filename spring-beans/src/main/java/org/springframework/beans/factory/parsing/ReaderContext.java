@@ -21,7 +21,9 @@ import org.springframework.lang.Nullable;
 
 /**
  * Context that gets passed along a bean definition reading process,
- * encapsulating all relevant configuration as well as state.
+ * encapsulating all relevant（相应） configuration as well as state.
+ *
+ * 在bean definition 读取过程中传递的参数，封装了所有相应的配置和状态
  *
  * @author Rob Harrop
  * @author Juergen Hoeller
