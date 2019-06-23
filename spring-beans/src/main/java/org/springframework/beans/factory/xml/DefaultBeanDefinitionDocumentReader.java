@@ -119,17 +119,23 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	 */
 	@SuppressWarnings("deprecation")  // for Environment.acceptsProfiles(String...)
 	protected void doRegisterBeanDefinitions(Element root) {
-		// Any nested <beans> elements will cause recursion in this method. In
-		// order to propagate and preserve <beans> default-* attributes correctly,
+		// Any nested <beans> elements will cause recursion（递归） in this method. In
+		// order to propagate（传播） and preserve <beans> default-* attributes correctly,
 		// keep track of the current (parent) delegate, which may be null. Create
 		// the new (child) delegate with a reference to the parent for fallback purposes,
 		// then ultimately reset this.delegate back to its original (parent) reference.
 		// this behavior emulates a stack of delegates without actually necessitating one.
+		// 任何的嵌套<beans>元素都将导致这个方法中的诋毁。
+		//为了传播和保护 <beans> 的默认-* 属性正确性，
 		BeanDefinitionParserDelegate parent = this.delegate;
+
+		//TODO createDelegate
 		this.delegate = createDelegate(getReaderContext(), root, parent);
 
 		if (this.delegate.isDefaultNamespace(root)) {
+
 			String profileSpec = root.getAttribute(PROFILE_ATTRIBUTE);
+			//处理beans标签的 profile
 			if (StringUtils.hasText(profileSpec)) {
 				String[] specifiedProfiles = StringUtils.tokenizeToStringArray(
 						profileSpec, BeanDefinitionParserDelegate.MULTI_VALUE_ATTRIBUTE_DELIMITERS);
@@ -145,8 +151,13 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 			}
 		}
 
+		//前置扩展点：用户可以把xml中客户自定义元素转换成BeanDefinition.
 		preProcessXml(root);
+
+		//解析
 		parseBeanDefinitions(root, this.delegate);
+
+		//后置扩展点
 		postProcessXml(root);
 
 		this.delegate = parent;
@@ -166,12 +177,14 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	 * @param root the DOM root element of the document
 	 */
 	protected void parseBeanDefinitions(Element root, BeanDefinitionParserDelegate delegate) {
+		//如果根节点采用了默认的http://www.springframework.org/schema/beans 命名空间，执行解析
 		if (delegate.isDefaultNamespace(root)) {
 			NodeList nl = root.getChildNodes();
 			for (int i = 0; i < nl.getLength(); i++) {
 				Node node = nl.item(i);
 				if (node instanceof Element) {
 					Element ele = (Element) node;
+					//如果元素采用了默认的命名空间执行解析，否则执行自定义命名空间的解析
 					if (delegate.isDefaultNamespace(ele)) {
 						parseDefaultElement(ele, delegate);
 					}
@@ -301,13 +314,18 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	/**
 	 * Process the given bean element, parsing the bean definition
 	 * and registering it with the registry.
+	 * 把给定的Element解析成bean definition并注册
 	 */
 	protected void processBeanDefinition(Element ele, BeanDefinitionParserDelegate delegate) {
+		//从Element中解析出beanDefinition放入BeanDefinitionHolder中
+		//BeanDefinitionHolder存放了beanDefinition、beanName、aliases（别名）
+		//TODO parseBeanDefinitionElement
 		BeanDefinitionHolder bdHolder = delegate.parseBeanDefinitionElement(ele);
 		if (bdHolder != null) {
+			//TODO decorateBeanDefinitionIfRequired
 			bdHolder = delegate.decorateBeanDefinitionIfRequired(ele, bdHolder);
 			try {
-				// Register the final decorated instance.
+				// 注册BeanDefinition
 				BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry());
 			}
 			catch (BeanDefinitionStoreException ex) {

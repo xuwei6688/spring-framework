@@ -24,5 +24,6 @@ public class Test {
 
 		Car car = (Car)beanFactory.getBean("car");
 		System.out.println(car);
+
 	}
 }

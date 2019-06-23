@@ -2,11 +2,14 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+	default-init-method="init"
+	default-destroy-method="destroy">
 
     <bean id="car" class="org.springframework.beans.my.Car">
         <property name="brand" value="宝马"/>
         <property name="color" value="黑色"/>
         <property name="maxSpeed" value="34"/>
     </bean>
+
 </beans>

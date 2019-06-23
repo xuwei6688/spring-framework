@@ -78,9 +78,9 @@ import org.springframework.util.StringValueResolver;
 
 /**
  * Abstract base class for {@link org.springframework.beans.factory.BeanFactory}
- * implementations, providing the full capabilities of the
+ * implementations, providing the full capabilities（能力） of the
  * {@link org.springframework.beans.factory.config.ConfigurableBeanFactory} SPI.
- * Does <i>not</i> assume a listable bean factory: can therefore also be used
+ * Does <i>not</i> assume a listable bean factory: can therefore（因此） also be used
  * as base class for bean factory implementations which obtain bean definitions
  * from some backend resource (where bean definition access is an expensive operation).
  *
@@ -227,7 +227,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	/**
 	 * Return an instance, which may be shared or independent, of the specified bean.
 	 * @param name the name of the bean to retrieve
-	 * @param requiredType the required type of the bean to retrieve
+	 * @param requiredType the required type of the bean to retrieve（检索）
 	 * @param args arguments to use when creating a bean instance using explicit arguments
 	 * (only applied when creating a new instance as opposed to retrieving an existing one)
 	 * @param typeCheckOnly whether the instance is obtained for a type check,
@@ -1568,6 +1568,9 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * Mark the specified bean as already created (or about to be created).
 	 * <p>This allows the bean factory to optimize its caching for repeated
 	 * creation of the specified bean.
+	 *
+	 * 标记指定的bean已经被创造（或即将被创造）
+	 * 这样就允许bean工厂为重复创造指定的bean做缓存优化
 	 * @param beanName the name of the bean
 	 */
 	protected void markBeanAsCreated(String beanName) {
@@ -1576,6 +1579,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				if (!this.alreadyCreated.contains(beanName)) {
 					// Let the bean definition get re-merged now that we're actually creating
 					// the bean... just in case some of its metadata changed in the meantime.
+					//让 bean definition 重新合并，我们实际上实在创建bean
+					//以防它的元数据在此期间发生变化
 					clearMergedBeanDefinition(beanName);
 					this.alreadyCreated.add(beanName);
 				}
