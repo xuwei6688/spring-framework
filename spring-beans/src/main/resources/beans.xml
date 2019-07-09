@@ -7,9 +7,20 @@
 	default-destroy-method="destroy">
 
     <bean id="car" class="org.springframework.beans.my.Car">
-        <property name="brand" value="宝马"/>
-        <property name="color" value="黑色"/>
-        <property name="maxSpeed" value="34"/>
+<!--        <property name="brand" value="宝马"/>-->
+<!--        <property name="color" value="黑色"/>-->
+<!--        <property name="maxSpeed" value="34"/>-->
+		<constructor-arg name="brand" value="宝马"/>
+		<constructor-arg name="color" value="黑色"/>
+		<constructor-arg name="maxSpeed" value="34"/>
     </bean>
+	     <!-- FactoryBean -->
+<!--	<bean id="car" class="org.springframework.beans.my.MyFactoryBean"/>-->
 
+<!--	<bean id="myCommand" class="org.springframework.beans.my.Command" scope="prototype">-->
+<!--		<property name="state" value="hah"/>-->
+<!--	</bean>-->
+<!--	<bean id="command" class="org.springframework.beans.my.CommandManager">-->
+<!--		<lookup-method name="createCommand" bean="myCommand"/>-->
+<!--	</bean>-->
 </beans>

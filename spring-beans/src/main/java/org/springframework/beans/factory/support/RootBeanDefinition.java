@@ -104,6 +104,7 @@ public class RootBeanDefinition extends AbstractBeanDefinition {
 	boolean postProcessed = false;
 
 	/** Package-visible field that indicates a before-instantiation post-processor having kicked in. */
+	/** 包可见字段，指示实例化post-processor是否启用 ，默认是null,或true都表示启用**/
 	@Nullable
 	volatile Boolean beforeInstantiationResolved;
 

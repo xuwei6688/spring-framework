@@ -22,8 +22,9 @@ public class Test {
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 
-		Car car = (Car)beanFactory.getBean("car");
+		Car car = (Car) beanFactory.getBean("car");
 		System.out.println(car);
+//		car.process("nihao");
 
 	}
 }

@@ -28,6 +28,8 @@ import java.beans.PropertyDescriptor;
  * <p>Provides operations to analyze and manipulate standard JavaBeans:
  * the ability to get and set property values (individually or in bulk),
  * get property descriptors, and query the readability/writability of properties.
+ * 提供分析和操作标准javaBean的操作：
+ * get或set属性的能力，获取属性描述，查询属性的可读性/可写性
  *
  * <p>This interface supports <b>nested properties</b> enabling the setting
  * of properties on subproperties to an unlimited depth.
