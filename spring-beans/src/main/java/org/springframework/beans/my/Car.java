@@ -38,12 +38,12 @@ public class Car {
         this.maxSpeed = maxSpeed;
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "brand='" + brand + '\'' +
-                ", color='" + color + '\'' +
-                ", maxSpeed=" + maxSpeed +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Car{" +
+//                "brand='" + brand + '\'' +
+//                ", color='" + color + '\'' +
+//                ", maxSpeed=" + maxSpeed +
+//                '}';
+//    }
 }

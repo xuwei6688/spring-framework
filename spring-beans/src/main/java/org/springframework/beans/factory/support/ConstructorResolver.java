@@ -150,6 +150,7 @@ class ConstructorResolver {
 			if (candidates == null) {
 				Class<?> beanClass = mbd.getBeanClass();
 				try {
+					//获取候选的构造方法 getDeclaredConstructors（所有的）getDeclaredConstructors(public)
 					candidates = (mbd.isNonPublicAccessAllowed() ?
 							beanClass.getDeclaredConstructors() : beanClass.getConstructors());
 				}
@@ -193,14 +194,17 @@ class ConstructorResolver {
 			Set<Constructor<?>> ambiguousConstructors = null;
 			LinkedList<UnsatisfiedDependencyException> causes = null;
 
+			//遍历所有的候选构造方法，寻找匹配的构造方法
 			for (Constructor<?> candidate : candidates) {
 				Class<?>[] paramTypes = candidate.getParameterTypes();
 
 				if (constructorToUse != null && argsToUse != null && argsToUse.length > paramTypes.length) {
 					// Already found greedy constructor that can be satisfied ->
 					// do not look any further, there are only less greedy constructors left.
+					//已经找到了满足的构造方法，跳出循环，不再寻找了
 					break;
 				}
+				//该候选构造方法参数长度小于最小参数列表长度，不满足条件
 				if (paramTypes.length < minNrOfArgs) {
 					continue;
 				}
@@ -282,6 +286,8 @@ class ConstructorResolver {
 		}
 
 		Assert.state(argsToUse != null, "Unresolved constructor arguments");
+
+		//到这里已经确定了需要的构造方法和参数，下面开始实例化javaBean
 		bw.setBeanInstance(instantiate(beanName, mbd, constructorToUse, argsToUse));
 		return bw;
 	}

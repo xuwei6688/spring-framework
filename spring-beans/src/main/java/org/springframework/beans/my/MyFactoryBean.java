@@ -9,7 +9,7 @@ public class MyFactoryBean implements FactoryBean {
 		car.setBrand("别克");
 		car.setColor("黑");
 		car.setMaxSpeed(45);
-		return null;
+		return car;
 	}
 
 	@Override
