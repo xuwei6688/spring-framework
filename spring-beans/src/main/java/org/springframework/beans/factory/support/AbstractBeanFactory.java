@@ -1156,12 +1156,16 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * Initialize the given BeanWrapper with the custom editors registered
 	 * with this factory. To be called for BeanWrappers that will create
 	 * and populate bean instances.
+	 *
+	 * 用注册在这个工厂的自定义editors初始化给定的BeanWrapper。BeanWrapper会在填充实例时调用
 	 * <p>The default implementation delegates to {@link #registerCustomEditors}.
 	 * Can be overridden in subclasses.
 	 * @param bw the BeanWrapper to initialize
 	 */
 	protected void initBeanWrapper(BeanWrapper bw) {
+		//配置ConversionService，ConversionService是PropertyEditors的替代，在Spring 3.0之后出现
 		bw.setConversionService(getConversionService());
+		//配置PropertyEditors。BeanWrapper实现了PropertyEditorRegistry
 		registerCustomEditors(bw);
 	}
 

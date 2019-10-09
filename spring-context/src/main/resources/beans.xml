@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-	<bean class="org.springframework.my.InstantiationTracingBeanPostProcessor"/>
-    <bean id="car" class="org.springframework.beans.my.Car"/>
-<!--        <property name="brand" value="宝马"/>-->
-<!--        <property name="color" value="黑色"/>-->
-<!--        <property name="maxSpeed" value="34"/>-->
+	   xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
+<!--	<bean id="emailService" class="org.springframework.my.event.EmailService">-->
+<!--		<property name="blackList">-->
+<!--			<list>-->
+<!--				<value>known.spammer@example.org</value>-->
+<!--				<value>known.hacker@example.org</value>-->
+<!--				<value>john.doe@example.org</value>-->
+<!--			</list>-->
+<!--		</property>-->
+<!--	</bean>-->
+	<context:component-scan base-package="org.springframework.my"/>
 
+<!--	<bean  id="blackListNotifier"  class="org.springframework.my.event.BlackListNotifier"/>-->
+    <bean id="blackLisListener" class="org.springframework.my.event.BlackLisListener"/>
 
+<!--	<bean id="userManager" class="org.springframework.my.UserManager">-->
+<!--		<property name="date" value="2019-09-09"/>-->
+<!--	</bean>-->
+
+<!--	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">-->
+<!--		<property name="customEditors">-->
+<!--			<map>-->
+<!--				<entry key="java.util.Date" value="org.springframework.my.event.DatePropertyEditor"/>-->
+<!--			</map>-->
+<!--		</property>-->
+<!--	</bean>-->
+
+<!--	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">-->
+<!--		<property name="propertyEditorRegistrars">-->
+<!--			<list>-->
+<!--				<bean class="org.springframework.my.DatePropertiesEditorRegister"/>-->
+<!--			</list>-->
+<!--		</property>-->
+<!--	</bean>-->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="bean.properties"/>
+	</bean>
+	<bean id="myBeanPostProcessor" class="org.springframework.my.MyBeanPostProcessor"/>
+	<bean id="car" class="org.springframework.beans.my.Car">
+		<property name="brand" value="宝马"/>
+		<property name="color" value="${color}"/>
+		<property name="maxSpeed" value="${maxSpeed}"/>
+	</bean>
 </beans>

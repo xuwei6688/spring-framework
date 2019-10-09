@@ -28,6 +28,7 @@ import org.springframework.util.ObjectUtils;
  * a map keyed by property name, allows for more flexibility, and the
  * ability to handle indexed properties etc in an optimized way.
  *
+ * 这个对象持有单个属性的信息和值，这里使用了对象替代map存储，这样有更多的灵活性
  * <p>Note that the value doesn't need to be the final required type:
  * A {@link BeanWrapper} implementation should handle any necessary conversion,
  * as this object doesn't know anything about the objects it will be applied to.
